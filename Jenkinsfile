@@ -6,6 +6,7 @@ pipeline {
     }
     parameters {
         string(name: 'EMAILFNCT', defaultValue: 'email-function')
+        string(name: 'validation', defaultValue: '')
     }
     stages {
         stage("Clean Workspace and Pull Latest Code") {
@@ -21,13 +22,14 @@ pipeline {
                 expression {
                     echo "Validating JSON"
                     lintState = sh(script: 'python -m json.tool ${WORKSPACE}/aws-step-function.json > /dev/null', returnStdout: true)
+                    validation = lintState
                 }
             }
         }
         stage("Push Definition To AWS Step Functions") {
             when {
                 expression {
-                    lintState == 0
+                    validation == 0
                 }
             }
             steps {
