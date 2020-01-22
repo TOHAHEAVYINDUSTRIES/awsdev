@@ -13,16 +13,6 @@ pipeline {
                 echo "Cleaning Workspace"
                 cleanWs()
                 echo "Workspace cleaned, pulling latest code..."
-                /* checkout([$class: 'GitSCM',
-                    branches: [[name: "origin/${BRANCH_PATTERN}"]],
-                    extensions: [[$class: 'LocalBranch' ]],
-                    submoduleCfg: [],
-                    userRemoteConfigs: [[
-                        credentialsId: 'tohaheavyindustries',
-                        url: 'https://github.com/TOHAHEAVYINDUSTRIES/awsdev.git'
-                    ]]
-                ])
-                */
                 checkout scm
             }
         }
@@ -30,9 +20,8 @@ pipeline {
             when {
                 expression {
                     echo "Validating JSON"
-                    lintState = sh(script: 'cat ${WORKSPACE}/aws-step-function.json | python -m json.tool', returnStdout: true)
-                    echo "LintState is ${lintState}"
-                    /* lintState == "" */
+                    lintState = sh(script: 'python -m json.tool ${WORKSPACE}/aws-step-function.json > /dev/null', returnStdout: true)
+                    lintState == '0'
                 }
             }
             steps {
