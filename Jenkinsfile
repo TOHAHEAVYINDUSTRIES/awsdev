@@ -13,9 +13,8 @@ pipeline {
                 echo "Cleaning Workspace"
                 cleanWs()
                 echo "Workspace cleaned, pulling latest code..."
-                checkout([$class: 'GitSCM',
+                /* checkout([$class: 'GitSCM',
                     branches: [[name: "origin/${BRANCH_PATTERN}"]],
-                    doGenerateSubmoduleConfiguration: false,
                     extensions: [[$class: 'LocalBranch' ]],
                     submoduleCfg: [],
                     userRemoteConfigs: [[
@@ -23,6 +22,8 @@ pipeline {
                         url: 'https://github.com/TOHAHEAVYINDUSTRIES/awsdev.git'
                     ]]
                 ])
+                */
+                checkout scm
             }
         }
         stage("Lint StepFunction Definition") {
