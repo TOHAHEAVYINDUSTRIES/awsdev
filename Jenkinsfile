@@ -1,11 +1,11 @@
 pipeline {
     agent any
-    label "step-function-pipeline"
+    label 'step-function-pipeline'
     environment {
-        accountid = 'arn:aws:lambda:us-east-1:4989485945:function'
-        parameters {
-            eml = "email-function"
-        }
+        ACCOUNTID = 'arn:aws:lambda:us-east-1:4989485945:function'
+    }
+    parameters {
+        eml = "email-function"
     }
     stages {
         stage("Clean Workspace and Pull Latest Code") {
