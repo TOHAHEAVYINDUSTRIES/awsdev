@@ -29,11 +29,8 @@ pipeline {
         stage("Lint StepFunction Definition") {
             when {
                 expression {
-                    sh 'pwd'
-                    sh 'ls -l'
-                    echo "${WORKSPACE}"
                     echo "Validating JSON"
-                    lintState = sh(script: 'cat ${workspace}/aws-step-function.json | python -m json.tool', returnStdout: true)
+                    lintState = sh(script: 'cat ${WORKSPACE}/aws-step-function.json | python -m json.tool', returnStdout: true)
                     echo "LintState is ${lintState}"
                     /* lintState == "" */
                 }
