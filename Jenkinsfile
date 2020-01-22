@@ -19,7 +19,7 @@ pipeline {
                     extensions: [[$class: 'LocalBranch' ]],
                     submoduleCfg: [],
                     userRemoteConfigs: [[
-                        credentialsId: 'tohaheavyindustries'
+                        credentialsId: 'tohaheavyindustries',
                         url: 'https://github.com/TOHAHEAVYINDUSTRIES/awsdev.git'
                     ]]
                 ])
