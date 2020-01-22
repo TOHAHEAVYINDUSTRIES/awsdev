@@ -22,14 +22,14 @@ pipeline {
                 expression {
                     echo "Validating JSON"
                     lintState = sh(script: 'python -m json.tool ${WORKSPACE}/aws-step-function.json > /dev/null', returnStdout: true)
-                    validation = lintState
+                    env.validation = lintState
                 }
             }
         }
         stage("Push Definition To AWS Step Functions") {
             when {
                 expression {
-                    validation == 0
+                    env.validation == 0
                 }
             }
             steps {
