@@ -30,8 +30,9 @@ pipeline {
             when {
                 expression {
                     echo "Validating JSON"
-                /* lintState = sh(script: 'jsonlint -d relaxed .\aws-stepfunction-definition.json', returnStdout: true) */
-                    lintState == ""
+                    lintState = sh(script: 'cat .\aws-stepfunction-definition.json | python -m json.tool', returnStdout: true)
+                    echo "LintState is ${lintState}"
+                    /* lintState == "" */
                 }
             }
             steps {
