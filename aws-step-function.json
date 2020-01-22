@@ -1,0 +1,49 @@
+{
+    "Comment": "A simple AWS Step Functions state machine that automates a call center support session.",
+    "StartAt": "AcceptScanRequest",
+    "States": {
+      "AcceptScanRequest": {
+        "Type": "Task",
+        "Resource": "arn:aws:lambda:REGION:ACCOUNT_ID:function:FUNCTION_NAME",
+        "Next": "ValidatePayload"
+      }, 
+      "ValidatePayload": {
+        "Type": "Task",
+        "Resource": "arn:aws:lambda:REGION:ACCOUNT_ID:function:FUNCTION_NAME",
+        "Next": "ValidateScannerAccess"
+      },
+      "ValidateScannerAccess": {
+        "Type": "Task",
+        "Resource": "arn:aws:lambda:REGION:ACCOUNT_ID:function:FUNCTION_NAME",
+        "Next": "RunRequestedScan"
+      },
+      "RunRequestedScan": {
+          "Type" : "Choice",
+          "Choices": [ 
+            {
+              "Variable": "$.Status",
+              "NumericEquals": 1,
+              "Next": "DepositResultstoS3"
+            },
+            {
+              "Variable": "$.Status",
+              "NumericEquals": 0,
+              "Next": "RequestScanStatus"
+            }
+        ]
+      },
+       "DepositResultstoS3": {
+        "Type": "Task",
+        "Resource": "arn:aws:lambda:REGION:ACCOUNT_ID:function:FUNCTION_NAME",
+        "End": true
+      },
+      "RequestScanStatus": {
+        "Type": "Task",
+        "Resource": "arn:aws:lambda:REGION:ACCOUNT_ID:function:FUNCTION_NAME",
+        "Next": "Fail"
+      },
+      "NotifyOfFailure": {
+        "Type": "Fail",
+        "Cause": "Engage Tier 2 Support."    }   
+    }
+  }
