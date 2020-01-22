@@ -2,6 +2,7 @@ pipeline {
     agent any
     environment {
         ACCOUNTID = 'arn:aws:lambda:us-east-1:4989485945:function'
+        BRANCH_PATTERN = 'refs/heads/master:refs/remotes/origin/master'
     }
     parameters {
         string(name: 'EMAILFNCT', defaultValue: 'email-function')
