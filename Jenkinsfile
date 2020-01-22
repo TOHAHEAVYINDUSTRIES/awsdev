@@ -1,11 +1,10 @@
 pipeline {
     agent any
-    label 'step-function-pipeline'
     environment {
         ACCOUNTID = 'arn:aws:lambda:us-east-1:4989485945:function'
     }
     parameters {
-        eml = "email-function"
+        string(name: 'EMAILFNCT' defaultValue: 'email-function')
     }
     stages {
         stage("Clean Workspace and Pull Latest Code") {
@@ -37,6 +36,7 @@ pipeline {
             }
             steps {
                 echo "Stepfunction Definition is Valid"
+                echo "Preflighting ${params.EMAIL}..."
             }
         }
     }
