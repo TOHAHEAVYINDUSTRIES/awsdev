@@ -29,7 +29,7 @@ pipeline {
             steps {
                 echo "Validating JSON"
                 /* lintState = sh(script: 'jsonlint -d relaxed .\aws-stepfunction-definition.json', returnStdout: true) */
-            },
+            }
             when {
                 expression {
                     lintState == ""
