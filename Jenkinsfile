@@ -4,7 +4,7 @@ pipeline {
         ACCOUNTID = 'arn:aws:lambda:us-east-1:4989485945:function'
     }
     parameters {
-        string(name: 'EMAILFNCT' defaultValue: 'email-function')
+        string(name: 'EMAILFNCT', defaultValue: 'email-function')
     }
     stages {
         stage("Clean Workspace and Pull Latest Code") {
