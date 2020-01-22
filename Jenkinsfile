@@ -13,10 +13,10 @@ pipeline {
                 echo "Cleaning Workspace"
                 cleanWs()
                 echo "Workspace cleaned, pulling latest code..."
-                checkout([\$class: 'GitSCM',
+                checkout([$class: 'GitSCM',
                     branches: [[name: "origin/${BRANCH_PATTERN}"]],
                     doGenerateSubmoduleConfiguration: false,
-                    extensions: [[\$class: 'LocalBranch' ]],
+                    extensions: [[$class: 'LocalBranch' ]],
                     submoduleCfg: [],
                     userRemoteConfigs: [[
                         credentialsId: 'tohaheavyindustries'
