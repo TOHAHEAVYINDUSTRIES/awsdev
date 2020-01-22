@@ -17,11 +17,17 @@ pipeline {
             }
         }
         stage("Lint StepFunction Definition") {
-            when {
+            steps {
                 expression {
                     echo "Validating JSON"
                     lintState = sh(script: 'python -m json.tool ${WORKSPACE}/aws-step-function.json > /dev/null', returnStdout: true)
-                    lintState == '0'
+                }
+            }
+        }
+        stage("Push Definition To AWS Step Functions") {
+            when {
+                expression {
+                    lintState == 0
                 }
             }
             steps {
