@@ -24,7 +24,7 @@ pipeline {
                     ]]
                 ])
             }
-        },
+        }
         stage("Lint StepFunction Definition") {
             steps {
                 echo "Validating JSON"
